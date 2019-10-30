@@ -1,10 +1,15 @@
 const fs = require("fs");
 
-function get_files(dir) {
-    fs.readdir("/", (err, items) => {
-        console.log(items);
+function get_dir_list_html(dir, listId, callback) {
+    fs.readdir(dir, (err, items) => {
+        var list = create_html_list(items, listId);
 
+        callback(list);
     });
 }
 
-module.exports = get_files;
+function create_html_list(files, listId) {
+    return "<ul id=" + listId + "><li>" + files.join("</li><li>") + "</li></ul>"
+}
+
+module.exports = get_dir_list_html;
