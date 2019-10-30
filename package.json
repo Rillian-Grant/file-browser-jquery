@@ -1,0 +1,21 @@
+{
+  "name": "file-browser",
+  "version": "1.0.0",
+  "description": "A simple electron file browser",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"No tests yet\""
+  },
+  "author": "Rillian Grant <rillian.grant@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^7.0.0",
+    "electron-builder": "^22.1.0",
+    "eslint": "^6.6.0"
+  },
+  "dependencies": {
+    "electron-is-dev": "^1.1.0",
+    "jquery": "^3.4.1"
+  }
+}
