@@ -9,7 +9,7 @@ function update_file_list(pwd) {
     var mainDomObject = $("#main");
     var idOfList = "fileList";  // The HTML id to assign to the <ul> tag that contains the list of files.
 
-    console.log(pwd);
+    console.log("PWD:" + pwd);
     get_dir_list_html(pwd, idOfList, (list) => {
         // Change body's HTML to contents of list
         $( mainDomObject ).html(list);
@@ -33,11 +33,10 @@ function create_html_list(files, listId, dir) {
 
     files = files.filter((item) => {return (item[0] != ".")});
     //     | <ul id="__listId__"><li> |
-    return "<ul id=" + listId + ">" + back + "<li>" + files.join("</li><li>") + "</li></ul>"
+    return `<ul id="${listId}">${back}<li>${files.join("</li><li>")}</li></ul>`
 }
 
 function add_click_handlers_to_list(pwd, idOfList) {
-    console.log(idOfList);
     // $( "#fileList" ) returns a list of all with tag fileList [0] returns the first and only item
     // the <ul id="fileList"> .children returns a list of all it's members (all <li>)
     var list = $("#" + idOfList)[0].children;
