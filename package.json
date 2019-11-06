@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "electron .",
-    "build": "electron-builder build -lmw",
+    "build": "electron-builder build -lw",
     "test": "echo \"No tests yet\""
   },
   "author": "Rillian Grant <rillian.grant@gmail.com>",
