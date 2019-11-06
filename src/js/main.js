@@ -9,6 +9,6 @@ var pwd = os.homedir();
 
 $( document ).ready(() => {
     // Setup the file list
-    pwd = update_file_list(pwd);
+        pwd = update_file_list(pwd);
 });
 

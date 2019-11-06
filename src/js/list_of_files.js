@@ -19,21 +19,23 @@ function update_file_list(pwd) {
 
 function get_dir_list_html(dir, listId, callback) {
     fs.readdir(dir, (err, items) => {
-        var list = create_html_list(items, listId, dir);
-
-        callback(list);
+            var list = create_html_list(items, listId, dir);
+            callback(list);
     });
 }
 
 function create_html_list(files, listId, dir) {
-    var back = "";
+    var upALevel = "";
     if (dir != "/") {
-        back = "<li>..</li>";
+        upALevel = "<li>..</li>";
     }
 
     files = files.filter((item) => {return (item[0] != ".")});
-    //     | <ul id="__listId__"><li> |
-    return `<ul id="${listId}">${back}<li>${files.join("</li><li>")}</li></ul>`
+    
+    return `<ul id="${listId}">
+                ${upALevel}
+                <li>${files.join("</li><li>")}</li>
+            </ul>`
 }
 
 function add_click_handlers_to_list(pwd, idOfList) {
@@ -42,18 +44,31 @@ function add_click_handlers_to_list(pwd, idOfList) {
     var list = $("#" + idOfList)[0].children;
     $.each(list, (index, item) => {
         item.onclick = () => {
+            // Click handler
             var targetPath = path.join(pwd, item.innerHTML);
-            var targetStats = fs.lstatSync(targetPath);
 
-            if (targetStats.isDirectory()) {
-                pwd = targetPath;
-                update_file_list(pwd)
-            } else if (targetStats.isFile()) {
-                openFile(targetPath);
-            }
+            try {
+                // Returns a error if the path is unreadable
+                fs.accessSync(targetPath, fs.R_OK)
+            
+                var targetStats = fs.lstatSync(targetPath);
+
+                if (targetStats.isDirectory()) {
+                    pwd = targetPath;
+                    update_file_list(pwd)
+                } else if (targetStats.isFile()) {
+                    openFile(targetPath);
+                } else {
+                    display_error("Can't read that file type")
+                }
+            } catch(err) { display_error(err); }
         }
     });
     return pwd
+}
+
+function display_error(err) {
+    alert(err);
 }
 
 module.exports = update_file_list;
